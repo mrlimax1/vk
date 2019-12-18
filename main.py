@@ -14,6 +14,8 @@ import os
 																			'''
 token_group = os.environ.get('grt')
 token_app = os.environ.get('apt')
+
+
 vk_session = vk_api.VkApi(token=token_group) #Токен вашей группы
 
 def get_button(label,color): #Функция по добавлению кнопок в клавиатуру, пример: get_button(ЛЮБОЙ ТЕКСТ, negative)
