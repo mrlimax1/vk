@@ -12,7 +12,7 @@ import os
 				   ссылка на вк:'https://vk.com/mrlimax'			
 
 																			'''
-token_group = os.environ.get('grt')
+token_group = os.environ.get('grt') #os.environ.get('grt')
 token_app = os.environ.get('apt')
 
 
