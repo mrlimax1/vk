@@ -124,7 +124,7 @@ for event in longpoll.listen():
 		)
 		else:
 			#Если сообщение никак не относится к нашим командам, то отправляем сообщение администратору
-	#		vk.messages.send(user_id=284389677,message='⠀',random_id = randint(1, 2147483647),keyboard=keyb,forward_messages=event.message_id)
+			vk.messages.send(user_id=284389677,message='⠀',random_id = randint(1, 2147483647),keyboard=keyb,forward_messages=event.message_id)
 			#Оповещаем пользователя о том, что его сообщение дошло до администрации
 			'''
 				На самом деле мы не просто оповещаем пользователя, 
@@ -134,5 +134,5 @@ for event in longpoll.listen():
 				 бесконечно переотправлять сообщение администратору,
 			   из-за того, что бот просто не прочитает его и постоянно
 				              будет считать его новым 
-																	'''
-	#		vk.messages.send(user_id=event.user_id,message='Ваш запрос отправлен администратору',random_id = randint(1, 2147483647),keyboard=keyb)
+			"""															'''
+			vk.messages.send(user_id=event.user_id,message='Ваш запрос отправлен администратору',random_id = randint(1, 2147483647),keyboard=keyb)
