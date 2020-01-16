@@ -38,6 +38,7 @@ menu.add_button(
 menu.add_button(
 				label="Оставить отзыв",
 				color="negative")
+menu = menu.get_keyboard()
 longpoll = VkLongPoll(vk_session)
 vk = vk_session.get_api()
 
@@ -50,46 +51,46 @@ for event in longpoll.listen():
 				user_id=event.user_id,
 				message='Здравствуй! Если ты по удалению моськи тогда скорее нажимай кнопку пожаловаться.',
 				random_id= randint(1, 2147483647),
-				keyboard=keyb #Отправляем клавиатуру нашему юзеру
+				keyboard=menu #Отправляем клавиатуру нашему юзеру
 		)
 		elif (event.text).lower() == 'как дела' or event.text == 'как дела?': #Здесь всё работает точно также, как и в if, только уже с другой командой
 			vk.messages.send( #Отправляем сообщение
 				user_id=event.user_id,
 				message='У меня всё отлично! Рад, что вы интересуетесь мною.',
 				random_id= randint(1, 2147483647),
-				keyboard=keyb
+				keyboard=menu
 		)
 		elif (event.text).lower() == 'пожаловаться':
 			vk.messages.send( #Отправляем сообщение
 				user_id=event.user_id,
 				message='Если вы хотите пожаловаться на человека, тогда прикрепите его профиль и напишите причину бана, а если вы по удалению моськи, тогда напишите причину(необязательно) и прикрепите пост.',
 				random_id= randint(1, 2147483647),
-				keyboard=nazad
+				keyboard=button_return
 		)
 		elif (event.text).lower() == 'назад':		
 			vk.messages.send( #Отправляем сообщение
 				user_id=event.user_id,
 				message='⠀',
 				random_id= randint(1, 2147483647),
-				keyboard=keyb
+				keyboard=menu
 		)
 		elif (event.text).lower() == 'предложить фото':
 			vk.messages.send( #Отправляем сообщение
 			user_id=event.user_id,
 			message='Чтобы предложить фото, просто прикрепите его к сообщению и отправьте нам!',
 			random_id= randint(1, 2147483647),
-			keyboard=nazad
+			keyboard=button_return
 		)
 		elif (event.text).lower() == 'оставить отзыв':
 			vk.messages.send( #Отправляем сообщение
 				user_id=event.user_id,
 				message='Напишите свой отзыв ему: vk.com/mrlimax.',
 				random_id= randint(1, 2147483647),
-				keyboard=keyb
+				keyboard=menu
 		)
 		elif (event.text).lower() == 'лучшее фото':        	
 			#Дальше будем парсить записи из группы 'Моськи школьников'
-			response = requests.get("https://api.vk.com/method/wall.get?access_token={}&v=5.101&count=100&domain=mocski".format(token_app))
+			response = requests.get("https://api.vk.com/method/wall.get?access_token=13bd242613bd242613bd2426cf13d1017d113bd13bd24264ee84d8293e3de2fd6ceb48c&v=5.101&count=100&domain=mocski")
 			data= response.json()["response"]['items']
 			best_post_likes = 0
 			for post in data:
@@ -103,12 +104,12 @@ for event in longpoll.listen():
 				user_id=event.user_id,
 				message='Это лучшая запись. На данный момент на ней {} лайков. Текст записи: {} '.format(best_post_likes, best_photo_text),
 				random_id= randint(1, 2147483647),
-				keyboard=keyb,
+				keyboard=menu,
 				attachment=best_photo_id
 		)
 		else:
 			#Если сообщение никак не относится к нашим командам, то отправляем сообщение администратору
-			vk.messages.send(user_id=284389677,message='⠀',random_id = randint(1, 2147483647),keyboard=keyb,forward_messages=event.message_id)
+			vk.messages.send(user_id=284389677,message='⠀',random_id = randint(1, 2147483647),keyboard=menu,forward_messages=event.message_id)
 			#Оповещаем пользователя о том, что его сообщение дошло до администрации
 			'''
 				На самом деле мы не просто оповещаем пользователя, 
@@ -118,5 +119,5 @@ for event in longpoll.listen():
 				 бесконечно переотправлять сообщение администратору,
 			   из-за того, что бот просто не прочитает его и постоянно
 				              будет считать его новым 
-			"""															'''
-			vk.messages.send(user_id=event.user_id,message='Ваш запрос отправлен администратору',random_id = randint(1, 2147483647),keyboard=keyb)
+																	'''
+			vk.messages.send(user_id=event.user_id,message='Ваш запрос отправлен администратору',random_id = randint(1, 2147483647),keyboard=menu)
