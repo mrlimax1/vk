@@ -1,5 +1,6 @@
 from random import randint
 from vk_api.longpoll import VkLongPoll,VkEventType
+from vk_api.keyboard import VkKeyboard
 import requests
 import vk_api
 import json
@@ -10,53 +11,36 @@ import os
 			   программирования PYTHON, версия vk_api - 5.103
 				       и писал его Евгений Смирнов	
 				   ссылка на вк:'https://vk.com/mrlimax'			
-
-																			'''
+																		'''
 token_group = os.environ.get('grt') #os.environ.get('grt')
 token_app = os.environ.get('apt')
 
-
 vk_session = vk_api.VkApi(token=token_group) #Токен вашей группы
 
-def get_button(label,color): #Функция по добавлению кнопок в клавиатуру, пример: get_button(ЛЮБОЙ ТЕКСТ, negative)
-	return {
-		"action": {
-			"type": "text",
-			"payload":"{\"button\": \"1\"}",
-			"label": label,
-
-			},
-		"color": color
-		}
-
-keyb = { #Основная клавиатура 
-	'one_time': False,
-	'buttons': [
-		[get_button(label="Предложить фото", color="positive"),
-		get_button(label="Пожаловаться", color="negative")],
-		[get_button(label="Лучшее фото", color="positive"),
-		get_button(label="Оставить отзыв", color="default")]
-		]
-
-
-	}
-keyb = json.dumps(keyb, ensure_ascii=False).encode('utf-8') #Переводим нашу клавиатуру в json-объект
-keyb = str(keyb.decode('utf-8'))                            #Обратно в utf-8 дабы python мог понимать эту ахинею
-
-
-nazad = { #КНОПКА НАЗАД 
-	'one_time': False,
-	'buttons': [
-		[
-		get_button(label="Назад", color="default")
-			]
-		]
-}
-nazad = json.dumps(nazad, ensure_ascii=False).encode('utf-8') #Тут также переводим нашу клавиатуру в json-объект
-nazad = str(nazad.decode('utf-8'))                            #Обратно в utf-8 дабы python мог понимать эту ахинею
-
+#Приступаем к клавиатуре!
+#Кнопка, которая возвращает нас назад
+button_return = VkKeyboard()                   #Для создания клавиатуры будем использовать vk_api.keyboard, создаём объект клавиатуры								   
+button_return.add_button(   
+						label="Назад")         #Добавляем кнопку в клавиатуру
+button_return = button_return.get_keyboard()   #Переводим в json, чтоб vk_api смог понять, что это клавиатура		
+#Меню группы
+menu = VkKeyboard()
+menu.add_button(
+				label="Предложить фото",
+				color="positive")
+menu.add_button(
+				label="Пожаловаться",
+				color="negative")
+menu.add_line()
+menu.add_button(
+				label="Лучшее фото",
+				color="positive")
+menu.add_button(
+				label="Оставить отзыв",
+				color="negative")
 longpoll = VkLongPoll(vk_session)
 vk = vk_session.get_api()
+
 
 for event in longpoll.listen():
 	if event.type == VkEventType.MESSAGE_NEW and event.to_me: #Если вас НЕ будут волновать документы, фотки видео и тд, то также пропишите:'and event.text'
