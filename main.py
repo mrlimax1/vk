@@ -35,9 +35,7 @@ menu.add_line()
 menu.add_button(
 				label="Лучшее фото",
 				color="positive")
-menu.add_button(
-				label="Оставить отзыв",
-				color="negative")
+menu.add_button(label="Оставить отзыв")
 menu = menu.get_keyboard()
 longpoll = VkLongPoll(vk_session)
 vk = vk_session.get_api()
