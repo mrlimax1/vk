@@ -42,7 +42,7 @@ vk = vk_session.get_api()
 
 
 for event in longpoll.listen():
-	if event.type == VkEventType.MESSAGE_NEW and event.to_me: #Если вас НЕ будут волновать документы, фотки видео и тд, то также пропишите:'and event.text'
+	if event.type == VkEventType.MESSAGE_NEW and event.from_user: #Если вас НЕ будут волновать документы, фотки видео и тд, то также пропишите:'and event.text'
     #Слушаем longpoll, если пришло сообщение то:			
 		if (event.text).lower() == 'привет' or event.text == 'начать' or event.text == 'Начать' : #Если написали заданную фразу
 			vk.messages.send( #Отправляем сообщение
