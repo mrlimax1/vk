@@ -88,7 +88,7 @@ for event in longpoll.listen():
 		)
 		elif (event.text).lower() == 'лучшее фото':        	
 			#Дальше будем парсить записи из группы 'Моськи школьников'
-			response = requests.get("https://api.vk.com/method/wall.get?access_token=13bd242613bd242613bd2426cf13d1017d113bd13bd24264ee84d8293e3de2fd6ceb48c&v=5.101&count=100&domain=mocski")
+			response = requests.get(f"https://api.vk.com/method/wall.get?access_token={token_app}&v=5.101&count=100&domain=mocski")
 			data= response.json()["response"]['items']
 			best_post_likes = 0
 			for post in data:
